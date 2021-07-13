@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
+const getPath = require('./lib/getPath');
 
 const port = process.env.PORT || 5000;
 
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 // Routes
-app.get('/', (req, res) => res.send('Home cloud API'));
+app.get('/', (req, res) => res.send('Main page cloud'));
 app.use('/content', require('./routes/content'));
 app.use('/mkdir', require('./routes/mkdir'));
 app.use('/upload', require('./routes/upload'));
