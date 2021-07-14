@@ -5,7 +5,7 @@ const { getContent } = require('../lib/helpers');
 const router = express.Router();
 
 // Get all the content in the path of cloud folder
-router.get('/:path?', async (req, res, next) => {
+router.get('/:path?', (req, res, next) => {
 
 	try {
 		var paths = getPath('/');
@@ -16,7 +16,7 @@ router.get('/:path?', async (req, res, next) => {
 
 			// Checking if dir exists
 			console.log('Cheking access to dir', paths.relativePath);
-			await fs.access(paths.absolutePath, (err) => {
+			fs.access(paths.absolutePath, (err) => {
 				if (err) {
 					res.status(400).end();
 				}

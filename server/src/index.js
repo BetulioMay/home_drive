@@ -11,7 +11,6 @@ const port = process.env.PORT || 5000;
 
 // Initializations
 const app = express();
-app.use(fileUpload());
 
 
 // Middlewares
@@ -19,6 +18,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+app.use(fileUpload());
 
 // Routes
 app.get('/', (req, res) => res.send('Main page cloud'));

@@ -8,46 +8,68 @@ const router = express.Router();
 router.post('/:path?', async (req, res, next) => {
 
 	try {
-		let file;
+		let files;
 		let uploadPath;
 	
+		// Check if there are files to upload
 		if (!req.files || Object.keys(req.files).length === 0) {
 			return res.status(400).json({
-				message: 'No files were updated.',
+				message: 'No files were upload.',
 				success: false
 			});
 		}
-	
-		file = req.files.name;
+
+		// Array of file obj to upload to the same directory
+		files = (req.files.name.length > 1) ? req.files.name : new Array(req.files.name);
 		uploadPath = (req.params.path) ?
 					getPath('/' + req.params.path) :
 					getPath('/');
 
-		console.log(uploadPath.absolutePath);
+		console.log(files);
 
 		// Checking if dir exists
 		console.log('Cheking access to dir', uploadPath.relativePath);
 		if (fs.existsSync(uploadPath.absolutePath)) {
 
-			if (fs.existsSync(path.join(uploadPath.absolutePath, file.name))) {
-				return res.status(400).json({
-					message: 'File already exists.',
-					success: false
-				});
-			}
+			var filesUploaded = [];
 
-			// Move the file to storage with mv() method
-			file.mv(path.join(uploadPath.absolutePath, file.name), (err) => {
-				if (err) return res.status(500).json({
-					message: `File could not be uploaded to ${uploadPath.absolutePath}`,
-					success: false
+			for (let file of files) {
+				// Checking if the file already exists
+				if (fs.existsSync(path.join(uploadPath.absolutePath, file.name))) {
+					return res.status(400).json({
+						message: 'File already exists.',
+						success: false
+					});
+				}
+	
+				// Move the file to storage with mv() method
+				file.mv(path.join(uploadPath.absolutePath, file.name), (err) => {
+					if (err) return res.status(500).json({
+						message: `File ${file.name} could not be uploaded to ${uploadPath.absolutePath}`,
+						success: false
+					});
+					
+					console.log('Uploaded', file.name+'...');
+					// res.json({
+						// 	message: 'File uploaded successfully.',
+						// 	dest_path: uploadPath.relativePath,
+						// 	success: true
+						// });
+					// });
 				});
-
-				res.json({
-					message: 'File uploaded successfully.',
+				let f = {
+					file: file.name,
 					dest_path: uploadPath.relativePath,
 					success: true
-				});
+				};
+
+				filesUploaded.push(f);
+			}
+
+			res.json({
+				files: filesUploaded,
+				message: `${files.length} file(s) uploaded successfully`,
+				success: true
 			});
 
 		} else {
