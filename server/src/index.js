@@ -20,7 +20,7 @@ app.use(cors());
 // Routes
 app.get('/', (req, res) => res.send('Main page cloud'));
 app.use('/content', require('./routes/content'));
-app.use('/mkdir', require('./routes/mkdir'));
+app.use('/dir', require('./routes/dir'));
 app.use('/upload', require('./routes/upload'));
 app.use('/download', require('./routes/download'));
 

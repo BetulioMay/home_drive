@@ -8,12 +8,12 @@ router.get('/', (req, res) => {
 	res.send('This is the mkdir endpoint');
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/make', async (req, res, next) => {
 
 	if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-		res.status(401).json({
-			message: 'No body specified'
-		});
+		res.status(400).json({
+			message: 'Incorrect request body',
+		}).end();
 	} else {
 		try {
 			const dir_name = req.body.name;
@@ -53,7 +53,6 @@ router.post('/', async (req, res, next) => {
 			next(err);
 		}
 	}
-
 });
 
 module.exports = router;

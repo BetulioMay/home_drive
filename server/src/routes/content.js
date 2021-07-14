@@ -13,7 +13,7 @@ router.get('/:path?', async (req, res, next) => {
 
 		// If client requests a folder path with hyphens inside the root
 		if (req.params.path) {
-			paths = getPath('/' + req.params.path.replace('-', '/'));
+			paths = getPath('/' + req.params.path);
 
 			// Checking if dir exists
 			console.log('Cheking access to dir', paths.relativePath);
@@ -38,6 +38,42 @@ router.get('/:path?', async (req, res, next) => {
 
 	} catch(err) {
 		next(err);
+	}
+});
+
+router.delete('/delete/:path', async (req, res) => {
+
+	const path = getPath('/' + req.params.path);
+	// console.log(path);
+
+	// Check if exists such path
+	if (fs.existsSync(path.absolutePath)) {
+		if (fs.lstatSync(path.absolutePath).isFile()) {
+			// DELETE for files
+			await fs.unlink(path.absolutePath, (err) => {
+				if (err) throw err;
+				res.json({
+					path_deleted: path.relativePath,
+					message: 'File deleted successfully',
+					success: true
+				});
+			});
+		} else {
+			// DELETE for folders
+			await fs.rmdir(path.absolutePath, { recursive: true }, (err) => {
+				if (err) throw err;
+				res.json({
+					path_deleted: path.relativePath,
+					message: 'Folder deleted successfully',
+					success: true
+				});
+			})
+		}
+	} else {
+		res.status(400).json({
+			message: 'File or folder does not exist',
+			success: false
+		});
 	}
 });
 
