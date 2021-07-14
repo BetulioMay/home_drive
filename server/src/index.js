@@ -4,7 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const getPath = require('./lib/getPath');
 const enoent = require('./middlewares/errors/enoent');
-const errHand = require('./middlewares/errors/err');
+const err = require('./middlewares/errors/err');
 
 const port = process.env.PORT || 5000;
 
@@ -22,10 +22,11 @@ app.get('/', (req, res) => res.send('Main page cloud'));
 app.use('/content', require('./routes/content'));
 app.use('/mkdir', require('./routes/mkdir'));
 app.use('/upload', require('./routes/upload'));
+app.use('/download', require('./routes/download'));
 
 // Errors
 app.use(enoent);
-app.use(errHand);
+app.use(err);
 
 
 // Fire the server up

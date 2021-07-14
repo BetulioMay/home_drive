@@ -27,11 +27,14 @@ router.get('/:path?', async (req, res, next) => {
 			// 	process.exitCode(404);
 			// }
 		}
-		console.log(paths);
+		// console.log(paths);
 
 		var content = getContent(paths);
 
-		res.json(content);
+		res.json({
+			content,
+			success: true
+		});
 
 	} catch(err) {
 		next(err);
