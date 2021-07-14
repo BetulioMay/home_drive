@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 const getPath = require('./lib/getPath');
+const fileUpload = require('express-fileupload');
 const enoent = require('./middlewares/errors/enoent');
 const err = require('./middlewares/errors/err');
 
@@ -10,6 +11,8 @@ const port = process.env.PORT || 5000;
 
 // Initializations
 const app = express();
+app.use(fileUpload());
+
 
 // Middlewares
 app.use(morgan('dev'));

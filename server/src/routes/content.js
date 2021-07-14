@@ -1,7 +1,6 @@
 const express = require('express');
 const getPath = require('../lib/getPath');
 const fs = require('fs');
-const path = require('path');
 const { getContent } = require('../lib/helpers');
 const router = express.Router();
 
