@@ -8,8 +8,8 @@ router.get('/', (req, res) => {
 	res.send('This is the mkdir endpoint');
 });
 
-// TODO: mkdir with a path param. (TEST)
-router.post('/:path?', (req, res, next) => {
+// TODO: mkdir with a path param. (CHECK - OK)
+router.post('/:path?', async (req, res, next) => {
 
 	if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
 		res.status(400).json({
@@ -24,16 +24,28 @@ router.post('/:path?', (req, res, next) => {
 			console.log('Cheking access to dir', dir_path.relativePath);
 			fs.access(dir_path.absolutePath, (err) => {
 				if (err) {
-					res.status(400).end();
+					res.status(400).json({
+						message: 'Destination directory not found.',
+						success: false
+					}).end();
 				}
 			});
 			
 			console.log('Checking if dir already exists');
 			if (!fs.existsSync(dir)) {
-				fs.mkdirSync(dir, (err) => {
+				// fs.mkdirSync(dir, (err) => {
+				// 	if (err) {
+				// 		res.status(402).end();
+				// 		throw err;
+				// 	}
+				// });
+				await fs.promises.mkdir(dir, (err) => {
 					if (err) {
-						res.status(402).end();
-						throw err;
+						console.error(err);
+						res.status(500).json({
+							message: 'Directory could not be created.',
+							success: false
+						});
 					}
 				});
 			} else {

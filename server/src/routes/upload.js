@@ -33,6 +33,7 @@ router.post('/:path?', async (req, res, next) => {
 
 			var filesUploaded = [];
 
+			console.log('Uploading file(s) to cloud');
 			for (let file of files) {
 				// Checking if the file already exists
 				if (fs.existsSync(path.join(uploadPath.absolutePath, file.name))) {
@@ -43,7 +44,7 @@ router.post('/:path?', async (req, res, next) => {
 				}
 	
 				// Move the file to storage with mv() method
-				file.mv(path.join(uploadPath.absolutePath, file.name), (err) => {
+				await file.mv(path.join(uploadPath.absolutePath, file.name), (err) => {
 					if (err) return res.status(500).json({
 						message: `File ${file.name} could not be uploaded to ${uploadPath.absolutePath}`,
 						success: false

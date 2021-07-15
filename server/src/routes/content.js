@@ -40,7 +40,7 @@ router.get('/:path?', (req, res, next) => {
 	}
 });
 
-router.delete('/delete/:path', (req, res) => {
+router.delete('/delete/:path', async (req, res) => {
 
 	const path = getPath('/' + req.params.path);
 	// console.log(path);
@@ -48,25 +48,41 @@ router.delete('/delete/:path', (req, res) => {
 	// Check if exists such path
 	if (fs.existsSync(path.absolutePath)) {
 		if (fs.lstatSync(path.absolutePath).isFile()) {
+
 			// DELETE for files
-			fs.unlink(path.absolutePath, (err) => {
-				if (err) throw err;
-				res.json({
-					path_deleted: path.relativePath,
-					message: 'File deleted successfully',
-					success: true
-				});
+			console.log('Deleting file', path.relativePath+'...');
+			await fs.promises.unlink(path.absolutePath, (err) => {
+				if (err) {
+					console.error(err);
+					res.status(500).json({
+						message: 'File could not be downloaded.',
+						success: false
+					});
+				}
+			});
+			res.json({
+				path_deleted: path.relativePath,
+				message: 'File deleted successfully',
+				success: true
 			});
 		} else {
+
 			// DELETE for folders
-			fs.rm(path.absolutePath, { recursive: true }, (err) => {
-				if (err) throw err;
-				res.json({
-					path_deleted: path.relativePath,
-					message: 'Folder deleted successfully',
-					success: true
-				});
-			})
+			console.log('Deleting folder', path.relativePath+'...');
+			await fs.promises.rm(path.absolutePath, { recursive: true }, (err) => {
+				if (err) {
+					console.error(err);
+					res.status(500).json({
+						message: 'File could not be downloaded.',
+						success: false
+					});
+				}
+			});
+			res.json({
+				path_deleted: path.relativePath,
+				message: 'Folder deleted successfully',
+				success: true
+			});
 		}
 	} else {
 		res.status(400).json({
