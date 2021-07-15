@@ -1,10 +1,20 @@
-import './App.css';
+import './styles/App.css';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import DirList from './components/DirList';
+require('dotenv').config();
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello world!</h1>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+      </div>
+      <Switch>
+        <Route path="/content/:path?" component={DirList} />
+        <Redirect path="/" to="/content" />
+      </Switch>
+    </Router>
   );
 }
 

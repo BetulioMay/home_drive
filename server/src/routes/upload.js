@@ -44,13 +44,12 @@ router.post('/:path?', async (req, res, next) => {
 				}
 	
 				// Move the file to storage with mv() method
+				console.log('Uploading' + file.name + '...');
 				await file.mv(path.join(uploadPath.absolutePath, file.name), (err) => {
 					if (err) return res.status(500).json({
 						message: `File ${file.name} could not be uploaded to ${uploadPath.absolutePath}`,
 						success: false
 					});
-					
-					console.log('Uploaded', file.name+'...');
 					// res.json({
 						// 	message: 'File uploaded successfully.',
 						// 	dest_path: uploadPath.relativePath,
