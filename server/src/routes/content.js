@@ -59,7 +59,7 @@ router.delete('/delete/:path', async (req, res) => {
 			});
 		} else {
 			// DELETE for folders
-			await fs.rmdir(path.absolutePath, { recursive: true }, (err) => {
+			await fs.rm(path.absolutePath, { recursive: true }, (err) => {
 				if (err) throw err;
 				res.json({
 					path_deleted: path.relativePath,

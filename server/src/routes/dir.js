@@ -8,7 +8,8 @@ router.get('/', (req, res) => {
 	res.send('This is the mkdir endpoint');
 });
 
-router.post('/make', async (req, res, next) => {
+// TODO: mkdir with a path param. (TEST)
+router.post('/:path?', (req, res, next) => {
 
 	if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
 		res.status(400).json({
@@ -17,18 +18,17 @@ router.post('/make', async (req, res, next) => {
 	} else {
 		try {
 			const dir_name = req.body.name;
-			const dir_path = getPath(req.body.path);
+			const dir_path = (req.params.path) ? getPath(req.params.path) : getPath('/');
 			const dir = path.join(dir_path.absolutePath, dir_name);
 
 			console.log('Cheking access to dir', dir_path.relativePath);
-			await fs.access(dir_path.absolutePath, (err) => {
+			fs.access(dir_path.absolutePath, (err) => {
 				if (err) {
 					res.status(400).end();
 				}
 			});
 			
-			console.log('Checking if already exists');
-
+			console.log('Checking if dir already exists');
 			if (!fs.existsSync(dir)) {
 				fs.mkdirSync(dir, (err) => {
 					if (err) {
@@ -43,8 +43,9 @@ router.post('/make', async (req, res, next) => {
 				});
 			}
 
+			console.log(`${req.body.name} created at ${dir_path.relativePath}`);
 			res.json({
-				dir: req.body,
+				dir_path: path.join(dir_path.relativePath, dir_name),
 				message: 'Directory created successfully',
 				success: true
 			});
