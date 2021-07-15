@@ -40,7 +40,7 @@ router.get('/:path?', (req, res, next) => {
 	}
 });
 
-router.delete('/delete/:path', async (req, res) => {
+router.delete('/delete/:path', (req, res) => {
 
 	const path = getPath('/' + req.params.path);
 	// console.log(path);
@@ -49,7 +49,7 @@ router.delete('/delete/:path', async (req, res) => {
 	if (fs.existsSync(path.absolutePath)) {
 		if (fs.lstatSync(path.absolutePath).isFile()) {
 			// DELETE for files
-			await fs.unlink(path.absolutePath, (err) => {
+			fs.unlink(path.absolutePath, (err) => {
 				if (err) throw err;
 				res.json({
 					path_deleted: path.relativePath,
@@ -59,7 +59,7 @@ router.delete('/delete/:path', async (req, res) => {
 			});
 		} else {
 			// DELETE for folders
-			await fs.rm(path.absolutePath, { recursive: true }, (err) => {
+			fs.rm(path.absolutePath, { recursive: true }, (err) => {
 				if (err) throw err;
 				res.json({
 					path_deleted: path.relativePath,
