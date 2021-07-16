@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import DirEl from './DirEl';
 
 /*
 *
@@ -15,7 +15,7 @@ class DirList extends React.Component {
 		this.state = {
 			files: [],
 			directories: []
-		}
+		};
 	}
 
 	componentDidMount(props) {
@@ -33,29 +33,35 @@ class DirList extends React.Component {
 	}
 
 	fillEntries(data) {
-		let content = data.content; // {path, files, dirs}
-		let newState = {files: content.files, directories: content.directories};
-		this.setState(newState);
+		const content = data.content;
+		this.setState({files: content.files, directories: content.directories});
 	}
 
+
 	render() {
-		let directories = this.state.directories;
-		let files = this.state.files;
-		let path = (this.props.match.params.path) ? '/'+this.props.match.params.path : '/';
+		const path = this.props.match.params.path;
+		const directories = this.state.directories;
+		const files = this.state.files;
+		/*
+		* IDEA: path is the key of the elements, could be in slash format instead of kebab?
+		*		Elements could (and should) be function components
+		*/
+
 		return (
 			<div className="Dir">
 
 				<h2>Folder: {path}</h2>
 
 				<ul className="DirList">
+					<DirEl key="parent" name="../" path={path} isDirectory isParent />
 					{
-						directories.map((el, index) => {
-							return <li key={path+'-'+el}>{el}</li>;
-						})
+						directories.map((dir, index) => {
+						return <DirEl key={dir} name={dir} path={path} isDirectory />
+					})
 					}
 					{
-						files.map((el, index) => {
-							return <li key={path+'-'+el}>{el}</li>;
+						files.map((file, index) => {
+							return <DirEl key={file} name={file} path={path} />
 						})
 					}
 				</ul>
@@ -65,4 +71,4 @@ class DirList extends React.Component {
 	}
 }
 
-export default withRouter(DirList);
+export default DirList;

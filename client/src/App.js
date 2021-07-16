@@ -11,8 +11,11 @@ function App() {
         <Navbar />
       </div>
       <Switch>
-        <Route path="/content/:path?" component={DirList} />
-        <Redirect path="/" to="/content" />
+        <Route
+        path="/content/:path?"
+        render={(props) => <DirList key={props.match.params.path} {...props} />}
+        />
+        <Redirect exact path="/" to="/content" />
       </Switch>
     </Router>
   );

@@ -1,5 +1,6 @@
 import '../styles/App.css';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar(props) {
 	return (
@@ -11,7 +12,9 @@ function Navbar(props) {
 			<div className="navbar-bar">
 				<ul className="navbar">
 					<li>
-						<span>Home</span>
+						<Link to="/">
+							<span>Home</span>
+						</Link>
 					</li>
 					<li>
 						<span>Upload file</span>
