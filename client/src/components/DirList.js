@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../api/api';
 import DirEl from './DirEl';
+import Navbar from './Navbar';
 
 /*
 *
@@ -8,10 +9,11 @@ import DirEl from './DirEl';
 *
 */
 
-class DirList extends React.Component {
+class DirList extends Component {
 
 	constructor(props) {
 		super(props);
+		this.api = api;
 		this.state = {
 			files: [],
 			directories: []
@@ -19,17 +21,13 @@ class DirList extends React.Component {
 	}
 
 	componentDidMount(props) {
-		let path = (this.props.match.params.path) ? '/'+this.props.match.params.path : '/';
-		let url = "http://localhost:8080/content" + path;
-		this.loadDirectory(url);
+		let path = (this.props.match.params.path) ? this.props.match.params.path : '';
+		this.loadDirectory(path);
 	}
 
-	async loadDirectory(url) {
-		axios.get(url)
-			.then(response => this.fillEntries(response.data))
-			.catch(err => {
-				console.error(err);
-			});
+	async loadDirectory(path) {
+		const res = await api.getContent(path);
+		this.fillEntries(res.data);
 	}
 
 	fillEntries(data) {
@@ -43,29 +41,30 @@ class DirList extends React.Component {
 		const directories = this.state.directories;
 		const files = this.state.files;
 		/*
-		* IDEA: path is the key of the elements, could be in slash format instead of kebab?
-		*		Elements could (and should) be function components
+		* IDEA: path is the key of the elements, could be in slash format instead of kebab? (NO -> Has to be sync with api request format)
+		*		Elements could (and should) be function components (OK -> DirEl)
 		*/
 
 		return (
-			<div className="Dir">
+			<div className="dir-space">
+				<Navbar path={path} />
+				<div className="dir">
+					<h2>Folder: {path}</h2>
 
-				<h2>Folder: {path}</h2>
-
-				<ul className="DirList">
-					<DirEl key="parent" name="../" path={path} isDirectory isParent />
-					{
-						directories.map((dir, index) => {
-						return <DirEl key={dir} name={dir} path={path} isDirectory />
-					})
-					}
-					{
-						files.map((file, index) => {
-							return <DirEl key={file} name={file} path={path} />
+					<ul className="DirList">
+						<DirEl key="parent" name="../" path={path} isDirectory isParent />
+						{
+							directories.map((dir, index) => {
+							return <DirEl key={dir} name={dir} path={path} isDirectory />
 						})
-					}
-				</ul>
-
+						}
+						{
+							files.map((file, index) => {
+								return <DirEl key={file} name={file} path={path} />
+							})
+						}
+					</ul>
+				</div>
 			</div>
 		);
 	}
