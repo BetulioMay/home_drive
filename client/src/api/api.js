@@ -10,7 +10,7 @@ class Api {
 		return await this.api.get(`/content/${path}`);
 	}
 
-	async uploadForm(path, file) {
+	async uploadFile(path, file) {
 		const formData = new FormData();
 		formData.append('name', file);
 		const config = {
@@ -19,6 +19,12 @@ class Api {
 			}
 		}
 		return await this.api.post(`/upload/${path}`, formData, config);
+	}
+
+	async mkDir(path, name) {
+		const name_dir = name;
+
+		return await this.api.post(`/dir/${path}`, {name: name_dir});
 	}
 }
 

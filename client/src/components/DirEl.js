@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 
+/*
+* TODO: Style this crap
+*/
 const DirItem = (props) => {
 	return (
 		<button>

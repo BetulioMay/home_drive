@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from './forms/Modal';
 import UploadForm from './forms/UploadForm';
+import MkdirForm from './forms/MkdirForm';
 
 class Navbar extends Component {
 	constructor(props) {
@@ -41,7 +42,7 @@ class Navbar extends Component {
 			if (isUpload) {
 				return <UploadForm path={path} />
 			} else {
-				return <h1>Mkdir form</h1>
+				return <MkdirForm path={path} />
 			}
 		}
 

@@ -4,9 +4,9 @@ const path = require('path');
 const getPath = require('../lib/getPath');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-	res.send('This is the mkdir endpoint');
-});
+// router.get('/', (req, res) => {
+// 	res.send('This is the mkdir endpoint');
+// });
 
 // TODO: mkdir with a path param. (CHECK - OK)
 router.post('/:path?', async (req, res, next) => {
