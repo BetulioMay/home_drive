@@ -24,7 +24,18 @@ class Api {
 	async mkDir(path, name) {
 		const name_dir = name;
 
-		return await this.api.post(`/dir/${path}`, {name: name_dir});
+		return await this.api.post(`/dir/${path}`, { name: name_dir });
+	}
+
+	async downloadFile(path) {
+		const url = `/download/${path}`;
+		const method = 'GET';
+
+		return this.api({
+			url,
+			method,
+			responseType: 'blob'
+		});
 	}
 }
 

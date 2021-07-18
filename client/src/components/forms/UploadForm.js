@@ -14,12 +14,12 @@ class UploadForm extends React.Component {
 		this.fileUpload = this.fileUpload.bind(this);
 	}
 
-	handleSubmit = (e) => {
+	handleSubmit = e => {
 		e.preventDefault();
 		this.fileUpload(this.state.file);
 	}
 
-	handleChange = (e) => {
+	handleChange = e => {
 		this.setState({file: e.target.files[0]});
 	}
 

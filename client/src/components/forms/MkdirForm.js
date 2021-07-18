@@ -10,12 +10,12 @@ class MkdirForm extends React.Component {
 		}
 	}
 
-	handleSubmit = (e) => {
+	handleSubmit = e => {
 		e.preventDefault();
 		this.sendDir(this.state.value);
 	}
 
-	handleChange = (e) => {
+	handleChange = e => {
 		this.setState({value: e.target.value});
 	}
 

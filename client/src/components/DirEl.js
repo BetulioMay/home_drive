@@ -1,9 +1,40 @@
 import { Link } from 'react-router-dom';
-
+import api from '../api/api';
 /*
 * TODO: Style this crap
 */
 const DirItem = (props) => {
+
+	const download = async () => {
+		let path = `${props.name}`;
+		if (props.path) {
+			path = `${props.path}-${props.name}`;
+		}
+		api.downloadFile(path)
+			.then((response) => {
+				const url = window.URL.createObjectURL(new Blob([response.data]));
+				const link = document.createElement('a');
+				link.href = url;
+				link.setAttribute('download', 'file.zip');
+				document.body.appendChild(link);
+				link.click();
+				link.remove();
+				console.log(response.data.message);
+			});
+	}
+
+
+	if (!props.isDirectory) {
+		return (
+			<button onClick={download}>
+				<div className="Item">
+					<span>
+						{props.name}
+					</span>
+				</div>
+			</button>
+		);
+	}
 	return (
 		<button>
 			<div className="Item">
