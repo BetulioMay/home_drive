@@ -12,7 +12,7 @@ class Api {
 
 	async uploadForm(path, file) {
 		const formData = new FormData();
-		formData.append('file', file);
+		formData.append('name', file);
 		const config = {
 			headers: {
 				'content-type': 'multipart/form-data'
