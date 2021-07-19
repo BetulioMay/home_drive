@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import api from '../api/api';
+import Modal from './forms/Modal';
+import React, { useState } from 'react';
 /*
 * TODO: Style this crap
 */
@@ -70,6 +72,8 @@ const DirLink = (props) => {
 }
 
 const DelBtn = (props) => {
+	
+	const [show, setShow] = useState(false);
 
 	const delEl = async () => {
 		const path = props.path ? `${props.path}--${props.name}` : `${props.name}`;
@@ -82,8 +86,15 @@ const DelBtn = (props) => {
 		return <></>;
 	}
 
+	
 	return(
-		<button onClick={delEl} >Del</button>
+		<>
+			<button onClick={() => setShow(true)}>Del</button>
+			<Modal show={show} handleClose={() => setShow(false)} >
+				<h1>Are you sure you want to delete {props.name}</h1>
+				<button onClick={delEl}>Yes</button>
+			</Modal>
+		</>
 	)
 }
 
