@@ -4,9 +4,9 @@
   "description": "My own home cloud.",
   "main": "index.js",
   "scripts": {
-    "start": "node server/src",
-    "start-watch": "nodemon server/src",
-    "dev": "concurrently \"npm run start-watch\" \"cd client && yarn start\""
+    "start": "node src",
+    "start-watch": "nodemon src",
+    "dev": "concurrently \"npm run start-watch\" \"cd ../client && yarn start\""
   },
   "repository": {
     "type": "git",
