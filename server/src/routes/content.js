@@ -12,10 +12,9 @@ router.get('/:path?', (req, res, next) => {
 
 		// If client requests a folder path with hyphens inside the root
 		if (req.params.path) {
-			paths = getPath('/' + req.params.path);
-
+			paths = getPath(req.params.path);
 			// Checking if dir exists
-			console.log('Cheking access to dir', paths.relativePath);
+			console.log('Checking access to dir', paths.relativePath);
 			fs.access(paths.absolutePath, (err) => {
 				if (err) {
 					res.status(400).end();

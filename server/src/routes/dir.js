@@ -21,7 +21,7 @@ router.post('/:path?', async (req, res, next) => {
 			const dir_path = (req.params.path) ? getPath(req.params.path) : getPath('/');
 			const dir = path.join(dir_path.absolutePath, dir_name);
 
-			console.log('Cheking access to dir', dir_path.relativePath);
+			console.log('Checking access to dir', dir_path.relativePath);
 			fs.access(dir_path.absolutePath, (err) => {
 				if (err) {
 					res.status(400).json({

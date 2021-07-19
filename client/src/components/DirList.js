@@ -37,6 +37,7 @@ class DirList extends Component {
 
 
 	render() {
+		// TODO: path separator in l.53 better arrows or slashes
 		const path = this.props.match.params.path;
 		const directories = this.state.directories;
 		const files = this.state.files;

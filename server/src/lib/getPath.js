@@ -2,7 +2,9 @@ const storage = require('./storage');
 const path = require('path');
 
 const getPath = (p) => {
-	p = p.replace('-', '/');
+
+	p = p.split('--').join('/');
+
 	var paths = {
 		relativePath: p,
 		absolutePath: path.join(storage, p)

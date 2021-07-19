@@ -7,6 +7,7 @@ class Api {
 		})
 	}
 	async getContent(path) {
+		// path = path.replace('/', '--');
 		return await this.api.get(`/content/${path}`);
 	}
 

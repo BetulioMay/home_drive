@@ -8,18 +8,18 @@ const DirItem = (props) => {
 	const download = async () => {
 		let path = `${props.name}`;
 		if (props.path) {
-			path = `${props.path}-${props.name}`;
+			path = `${props.path}--${props.name}`;
 		}
 		api.downloadFile(path)
 			.then((response) => {
 				const url = window.URL.createObjectURL(new Blob([response.data]));
 				const link = document.createElement('a');
 				link.href = url;
-				link.setAttribute('download', 'file.zip');
+				link.setAttribute('download', `${props.name}`);
 				document.body.appendChild(link);
 				link.click();
 				link.remove();
-				console.log(response.data.message);
+				// console.log(`File ${props.name} read successfully`);
 			});
 	}
 
@@ -54,11 +54,11 @@ const DirLink = (props) => {
 
 	let link = `/content/${props.name}`;
 	if (props.path) {
-		link = `${props.path}-${props.name}`;
+		link = `${props.path}--${props.name}`;
 	}
 
 	if (props.isParent) {
-		link = link.split('-').slice(0, -2).join('-') || '/content/';
+		link = link.split('--').slice(0, -2).join('--') || '/content/';
 	}
 
 	return (
