@@ -69,6 +69,24 @@ const DirLink = (props) => {
 
 }
 
+const DelBtn = (props) => {
+
+	const delEl = async () => {
+		const path = props.path ? `${props.path}--${props.name}` : `${props.name}`;
+		const res = await api.delEl(path);
+		window.location.reload();
+		console.log(res.data.message);
+	}
+
+	if (props.isParent) {
+		return <></>;
+	}
+
+	return(
+		<button onClick={delEl} >Del</button>
+	)
+}
+
 function DirEl(props) {
 
 	if (!props.path && props.isParent) {
@@ -80,6 +98,7 @@ function DirEl(props) {
 				<DirItem {...props}>
 				</DirItem>
 			</DirLink>
+			<DelBtn {...props} />
 		</li>
 	);
 }

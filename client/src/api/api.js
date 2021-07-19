@@ -38,6 +38,10 @@ class Api {
 			responseType: 'blob'
 		});
 	}
+
+	async delEl(path) {
+		return await this.api.delete(`/content/delete/${path}`);
+	}
 }
 
 const api = new Api();
