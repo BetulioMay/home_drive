@@ -20,10 +20,14 @@ class MkdirForm extends React.Component {
 	}
 
 	sendDir = async (name) => {
-		const path = this.props.path ? this.props.path : '';
-		const res = await this.api.mkDir(path, name);
-		window.location.reload();
-		console.log(res.data.message);
+		try {
+			const path = this.props.path ? this.props.path : '';
+			const res = await this.api.mkDir(path, name);
+			window.location.reload();
+			console.log(res.data.message);
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	render() {

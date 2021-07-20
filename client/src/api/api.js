@@ -3,12 +3,17 @@ import axios from 'axios';
 class Api {
 	constructor() {
 		this.api = axios.create({
-			baseURL: "http://localhost:8080"
+			baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080"
 		})
 	}
 	async getContent(path) {
 		// path = path.replace('/', '--');
-		return await this.api.get(`/content/${path}`);
+		try {
+			return await this.api.get(`/content/${path}`);
+		} catch (err) {
+			console.error(err);
+			return err;
+		}
 	}
 
 	async uploadFile(path, file) {
@@ -19,24 +24,34 @@ class Api {
 				'content-type': 'multipart/form-data'
 			}
 		}
-		return await this.api.post(`/upload/${path}`, formData, config);
+		try {
+			return await this.api.post(`/upload/${path}`, formData, config);
+		} catch (err) {
+			return err.response.data;
+		}
 	}
 
 	async mkDir(path, name) {
 		const name_dir = name;
-
-		return await this.api.post(`/dir/${path}`, { name: name_dir });
+		try {
+			return await this.api.post(`/dir/${path}`, { name: name_dir });
+		} catch (err) {
+			return err;
+		}
 	}
 
 	async downloadFile(path) {
 		const url = `/download/${path}`;
 		const method = 'GET';
-
-		return this.api({
-			url,
-			method,
-			responseType: 'blob'
-		});
+		try {
+			return this.api({
+				url,
+				method,
+				responseType: 'blob'
+			});
+		} catch (err) {
+			return err.response.data;
+		}
 	}
 
 	async delEl(path) {

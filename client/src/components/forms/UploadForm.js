@@ -25,10 +25,14 @@ class UploadForm extends React.Component {
 
 	fileUpload = async (file) => {
 		let path = this.props.path ? this.props.path : '';
-		let res = await this.api.uploadFile(path, file);
-		console.log(res.data.message);
-		this.setState({redirect: true});
-		window.location.reload();
+		try {
+			let res = await this.api.uploadFile(path, file);
+			console.log(res.data.message);
+			this.setState({redirect: true});
+			window.location.reload();
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	render() {

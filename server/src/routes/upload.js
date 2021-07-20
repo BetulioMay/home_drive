@@ -42,6 +42,14 @@ router.post('/:path?', async (req, res, next) => {
 						success: false
 					});
 				}
+
+				// Has the correct pattern
+				if(file.name.search('--') !== -1) {
+					return res.status(400).json({
+						message: 'Incorrect pattern',
+						success: false
+					})
+				}
 	
 				// Move the file to storage with mv() method
 				console.log('Uploading' + file.name + '...');

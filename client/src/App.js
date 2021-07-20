@@ -1,4 +1,5 @@
-import './styles/App.css';
+import './styles/main.css';
+// import './styles/App.css';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import DirList from './components/DirList';
 require('dotenv').config();

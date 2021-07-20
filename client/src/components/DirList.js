@@ -26,8 +26,12 @@ class DirList extends Component {
 	}
 
 	async loadDirectory(path) {
-		const res = await api.getContent(path);
-		this.fillEntries(res.data);
+		try {
+			const res = await api.getContent(path);
+			this.fillEntries(res.data);
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	fillEntries(data) {
@@ -49,10 +53,10 @@ class DirList extends Component {
 		return (
 			<div className="dir-space">
 				<Navbar path={path} />
+				<h2 className="text-4xl font-bold text-white" >Folder: {path}</h2>
 				<div className="dir">
-					<h2>Folder: {path}</h2>
 
-					<ul className="DirList">
+					<ul className="DirList flex justify-start items-center flex-wrap">
 						<DirEl key="parent" name="../" path={path} isDirectory isParent />
 						{
 							directories.map((dir, index) => {
