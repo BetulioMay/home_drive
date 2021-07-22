@@ -20,7 +20,6 @@ class MkdirForm extends React.Component {
 	}
 
 	sendDir = async (name) => {
-		this.resetInput();
 		try {
 			const path = this.props.path ? this.props.path : '';
 			const res = await this.api.mkDir(path, name);

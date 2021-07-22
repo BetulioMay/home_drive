@@ -51,7 +51,7 @@ class Navbar extends Component {
 			<div className="opt-space">
 				<div className="header">
 					<div className="logo">
-						<span>Header Logo</span>
+						<span><strong><i>CAMS</i></strong> Home Drive</span>
 					</div>
 
 					<div className="navbar-bar">

@@ -63,7 +63,7 @@ class DirList extends Component {
 		return (
 			<div className="dir-space">
 				<Navbar path={path} reload={this.reload}/>
-				<h2 className="text-4xl font-bold text-white" >Folder: {path ? path : '/'}</h2>
+				<h2 className="text-4xl font-bold text-white" >Folder: {path ? path.split('--').join(' > ') : '/'}</h2>
 
 				{/* In case of bad content request */}
 				{
