@@ -55,7 +55,7 @@ const DirItem = (props) => {
 	return (
 		<div>
 			
-			<svg width="200" height="150" viewBox="0 0 395 305" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<svg width="200" height="140" viewBox="0 0 395 305" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect y="25" width="395" height="280" rx="14" fill="#DF89ED"/>
 			<path d="M29 1L45.4545 25H12.5455L29 1Z" fill="#A176E8"/>
 			<path d="M113 1L129.454 25H96.5455L113 1Z" fill="#A176E8"/>
@@ -117,8 +117,10 @@ const DelBtn = (props) => {
 		<>
 			<div className="m-0 p-2 text-white bg-red-600 w-auto h-auto font-bold cursor-pointer" onClick={() => setShow(true)}>Delete</div>
 			<Modal show={show} handleClose={() => setShow(false)} >
-				<h1>Are you sure you want to delete {props.name}?</h1>
+			<div className="flex flex-col">
+				<h1 className="mb-20 mt-10 uppercase font-bold text-4xl text-red-800">Are you sure you want to delete {props.name}?</h1>
 				<button onClick={delEl}>Yes</button>
+			</div>
 			</Modal>
 		</>
 	)

@@ -42,7 +42,7 @@ class Navbar extends Component {
 			if (isUpload) {
 				return <UploadForm path={path} reload={() => this.props.reload()} hideModal={() => this.hideModal()} />
 			} else {
-				return <MkdirForm path={path} reload={() => this.props.reload()} hideModal={() => this.hideModal()} />
+				return <MkdirForm path={path} focus={this.state.showModal} reload={() => this.props.reload()} hideModal={() => this.hideModal()} />
 			}
 		}
 
@@ -51,7 +51,9 @@ class Navbar extends Component {
 			<div className="opt-space">
 				<div className="header">
 					<div className="logo">
-						<span><strong><i>CAMS</i></strong> Home Drive</span>
+						<Link to='/'>
+							<span className="text-4xl"><strong><i>CAMS</i></strong> Home Drive</span>
+						</Link>
 					</div>
 
 					<div className="navbar-bar">

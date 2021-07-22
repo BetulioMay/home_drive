@@ -68,7 +68,7 @@ class DirList extends Component {
 				{/* In case of bad content request */}
 				{
 					success ? 
-					<ul className="flex justify-start items-center flex-wrap">
+					<ul className="m-7 flex justify-start items-center flex-wrap">
 						<DirEl key="parent" name="<-Back" path={path} isDirectory isParent />
 						{
 							directories.map((dir, index) => {
