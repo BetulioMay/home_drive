@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
 import api from '../../api/api';
 
 class MkdirForm extends React.Component {
@@ -21,31 +20,35 @@ class MkdirForm extends React.Component {
 	}
 
 	sendDir = async (name) => {
+		this.resetInput();
 		try {
 			const path = this.props.path ? this.props.path : '';
 			const res = await this.api.mkDir(path, name);
 			console.log(res.data.message);
 
+
 			// Reload the page
 			this.props.hideModal();
 			this.props.reload();
+
 		} catch (err) {
 			console.log(err);
 		}
 	}
-
+	javascript
 	render() {
 
 		return(
 			<form onSubmit={this.handleSubmit}>
 				<label>
 					Folder name:
-					<input type='text' name='name' onChange={this.handleChange} />
+					<input type='text' name='name' placeholder="Type a name" onChange={this.handleChange} />
 				</label>
-				<button type='submit'>Create</button>
+				<button type='submit' >Create</button>
+				<button type="reset" >Reset</button>
 			</form>
 		);
 	};
 }
 
-export default withRouter(MkdirForm);
+export default MkdirForm;

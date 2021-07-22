@@ -72,7 +72,7 @@ class DirList extends Component {
 						<DirEl key="parent" name="<-Back" path={path} isDirectory isParent />
 						{
 							directories.map((dir, index) => {
-							return <DirEl key={dir} name={dir} path={path} isDirectory />
+							return <DirEl key={dir} name={dir} path={path} reload={this.reload} isDirectory />
 						})
 						}
 						{
