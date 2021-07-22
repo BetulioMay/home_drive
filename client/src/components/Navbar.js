@@ -40,7 +40,7 @@ class Navbar extends Component {
 		// TODO: Create Upload & Mkdir forms to render here.
 		const displayForm = () => {
 			if (isUpload) {
-				return <UploadForm path={path} />
+				return <UploadForm path={path} reload={() => this.props.reload()} hideModal={() => this.hideModal()} />
 			} else {
 				return <MkdirForm path={path} reload={() => this.props.reload()} hideModal={() => this.hideModal()} />
 			}

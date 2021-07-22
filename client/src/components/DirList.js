@@ -77,7 +77,7 @@ class DirList extends Component {
 						}
 						{
 							files.map((file, index) => {
-								return <DirEl key={file} name={file} path={path} />
+								return <DirEl key={file} name={file} path={path} reload={this.reload} />
 							})
 						}
 					</ul>

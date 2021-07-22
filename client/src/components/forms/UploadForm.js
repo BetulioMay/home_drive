@@ -6,8 +6,7 @@ class UploadForm extends React.Component {
 		super(props);
 		this.api = api;
 		this.state = {
-			file: null,
-			redirect: false
+			file: null
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -28,8 +27,11 @@ class UploadForm extends React.Component {
 		try {
 			let res = await this.api.uploadFile(path, file);
 			console.log(res.data.message);
-			this.setState({redirect: true});
-			window.location.reload();
+
+			// Reload the page
+			this.props.hideModal();
+			this.props.reload();
+
 		} catch (err) {
 			console.error(err);
 		}
