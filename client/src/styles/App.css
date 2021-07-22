@@ -66,8 +66,8 @@ button {
 }
 
 .modal-main {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 40%;
   left: 50%;
   width: 80%;
   height: auto;
