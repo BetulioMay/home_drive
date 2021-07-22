@@ -42,11 +42,12 @@ class Navbar extends Component {
 			if (isUpload) {
 				return <UploadForm path={path} />
 			} else {
-				return <MkdirForm path={path} />
+				return <MkdirForm path={path} reload={() => this.props.reload()} hideModal={() => this.hideModal()} />
 			}
 		}
 
 		return (
+			<>
 			<div className="opt-space">
 				<div className="header">
 					<div className="logo">
@@ -69,10 +70,11 @@ class Navbar extends Component {
 						</ul>
 					</div>
 				</div>
-				<Modal show={this.state.showModal} handleClose={this.hideModal}>
-					{displayForm()}
-				</Modal>
 			</div>
+			<Modal show={this.state.showModal} handleClose={this.hideModal}>
+				{displayForm()}
+			</Modal>
+			</>
 		);
 	}
 }

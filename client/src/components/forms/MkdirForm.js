@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
 import api from '../../api/api';
 
 class MkdirForm extends React.Component {
@@ -6,7 +7,7 @@ class MkdirForm extends React.Component {
 		super(props);
 		this.api = api;
 		this.state = {
-			value: ''
+			value: '',
 		}
 	}
 
@@ -23,14 +24,18 @@ class MkdirForm extends React.Component {
 		try {
 			const path = this.props.path ? this.props.path : '';
 			const res = await this.api.mkDir(path, name);
-			window.location.reload();
 			console.log(res.data.message);
+
+			// Reload the page
+			this.props.hideModal();
+			this.props.reload();
 		} catch (err) {
 			console.log(err);
 		}
 	}
 
 	render() {
+
 		return(
 			<form onSubmit={this.handleSubmit}>
 				<label>
@@ -43,4 +48,4 @@ class MkdirForm extends React.Component {
 	};
 }
 
-export default MkdirForm;
+export default withRouter(MkdirForm);

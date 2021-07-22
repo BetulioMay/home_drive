@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import api from '../api/api';
 import DirEl from './DirEl';
 import Navbar from './Navbar';
@@ -20,13 +20,19 @@ class DirList extends Component {
 			directories: [],
 			success: true
 		};
+		this.reload = this.reload.bind(this);
 	}
 
-	componentDidMount(props) {
+	
+	componentDidMount() {
 		let path = (this.props.match.params.path) ? this.props.match.params.path : '';
 		this.loadDirectory(path);
 	}
-
+	
+	reload() {
+		let path = (this.props.match.params.path) ? this.props.match.params.path : '';
+		this.loadDirectory(path);
+	}
 	async loadDirectory(path) {
 		try {
 			const res = await api.getContent(path);
@@ -56,27 +62,25 @@ class DirList extends Component {
 
 		return (
 			<div className="dir-space">
-				<Navbar path={path} />
+				<Navbar path={path} reload={this.reload}/>
 				<h2 className="text-4xl font-bold text-white" >Folder: {path ? path : '/'}</h2>
 
 				{/* In case of bad content request */}
 				{
 					success ? 
-					<div className="dir">
-						<ul className="DirList flex justify-start items-center flex-wrap">
-							<DirEl key="parent" name="<-Back" path={path} isDirectory isParent />
-							{
-								directories.map((dir, index) => {
-								return <DirEl key={dir} name={dir} path={path} isDirectory />
+					<ul className="flex justify-start items-center flex-wrap">
+						<DirEl key="parent" name="<-Back" path={path} isDirectory isParent />
+						{
+							directories.map((dir, index) => {
+							return <DirEl key={dir} name={dir} path={path} isDirectory />
+						})
+						}
+						{
+							files.map((file, index) => {
+								return <DirEl key={file} name={file} path={path} />
 							})
-							}
-							{
-								files.map((file, index) => {
-									return <DirEl key={file} name={file} path={path} />
-								})
-							}
-						</ul>
-					</div>
+						}
+					</ul>
 					:
 					<div className="flex justify-center items-center m-20">
 						<div>
