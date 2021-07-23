@@ -3,7 +3,7 @@ import axios from 'axios';
 class Api {
 	constructor() {
 		this.api = axios.create({
-			baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080"
+			baseURL: "http://192.168.1.85:8000"
 		})
 	}
 	async getContent(path) {
