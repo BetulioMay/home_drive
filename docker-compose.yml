@@ -1,0 +1,19 @@
+version: "3"
+services:
+    frontend:
+        container_name: react_app
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        image: cezeitar/react_app
+        ports:
+            - "3000:3000"
+    backend:
+        container_name: node_app
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        environment:
+            HOME_DRIVE_PATH: /usr/src/app/storage
+        ports:
+            - "8000:8000"

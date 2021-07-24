@@ -3,7 +3,7 @@ import axios from 'axios';
 class Api {
 	constructor() {
 		this.api = axios.create({
-			baseURL: "http://192.168.1.85:8000"
+			baseURL: "http://localhost:8000"
 		})
 	}
 	async getContent(path) {

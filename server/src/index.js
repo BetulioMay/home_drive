@@ -7,7 +7,7 @@ const fileUpload = require('express-fileupload');
 const enoent = require('./middlewares/errors/enoent');
 const err = require('./middlewares/errors/err');
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8000;
 
 // Initializations
 const app = express();
@@ -15,11 +15,6 @@ const app = express();
 
 // Middlewares
 app.use(morgan('dev'));
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
