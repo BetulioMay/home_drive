@@ -40,10 +40,10 @@ class UploadForm extends React.Component {
 	render() {
 		return(
 			<>
-			<h1 className="m-3 p-5 text-3xl text-gray-900 border-b-2 border-black">Upload file</h1>
+			<h1 className="m-3 p-5 text-3xl text-white border-b-2 border-white">Upload file</h1>
 				<form onSubmit={this.handleSubmit}>
 				<div className="flex flex-col mb-4">
-					<label className="mb-2 uppercase font-bold text-xl text-grey-darkest">
+					<label className="mb-2 uppercase font-bold text-xl text-white">
 						File to upload:
 					</label>
 					{/* <input

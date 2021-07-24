@@ -1,0 +1,23 @@
+
+version: '3'
+
+services:
+    backend:
+        image: "node:latest"
+        working_dir: /usr/src/app/server
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        volumes:
+            - ./server:/usr/src/app/server
+            - ${HOME_DRIVE_PATH}:/usr/src/app/storage
+        command: "npm start"
+    frontend:
+        image: "node:latest"
+        working_dir: /usr/src/app/client
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        volumes:
+            - ./client:/usr/src/app/client
+        command: "npm start"

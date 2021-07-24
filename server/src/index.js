@@ -33,6 +33,6 @@ app.use(err);
 
 
 // Fire the server up
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, () => {
 	console.log('Magic happens on:', port);
 });
